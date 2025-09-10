@@ -40,7 +40,6 @@
       <v-divider />
       <v-list>
         <!-- 友情链接 -->
-        <!--
         <v-list-item dense to="/links" router exact>
           <v-list-item-action>
             <v-icon>{{ icons.play_list_star }}</v-icon>
@@ -49,7 +48,6 @@
             <v-list-item-title>{{ $t('site.links') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        -->
         <v-list-item dense to="/about" router exact>
           <v-list-item-action>
             <v-icon>{{ icons.code_tags }}</v-icon>
@@ -63,7 +61,7 @@
     <v-app-bar dense class="primary white--text" app>
       <v-app-bar-nav-icon class="white--text" @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="$t('site.title')" />
-      <v-img src="/icon.png" style="max-width: 24px; margin-left: 6px;" />
+      <v-img src="/icon.svg" style="max-width: 24px; margin-left: 6px;" />
       <v-spacer />
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -73,7 +71,7 @@
         </template>
         <span>{{ $t('site.switch_dark_mode') }}</span>
       </v-tooltip>
-      <v-menu offset-y>
+      <!-- <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
           <v-tooltip bottom>
             <template v-slot:activator="{ on: tooltip }">
@@ -95,7 +93,7 @@
             <v-list-item-title>English</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu> -->
     </v-app-bar>
     <v-main>
       <v-container class="page">
@@ -106,12 +104,20 @@
           <div style="vertical-align: middle;">
             <span>&copy; {{ new Date().getFullYear() }} </span>
             <span>
-              <a :href="$t('site.footer.author_link')" target="_blank" rel="noreferrer">
+              <a :href="$t('site.footer.author_link_github')" target="_blank" rel="noreferrer">
                 {{ $t('site.footer.author') }}
               </a>
             </span>
             <v-btn
-              v-if="$t('site.footer.repo_link') === 'no_display'"
+              icon
+              :href="$t('site.footer.repo_link')"
+              target="_blank"
+              style="vertical-align: middle;"
+              rel="noreferrer"
+            >
+              <v-icon>{{ icons.github }}</v-icon>
+            </v-btn>
+            <v-btn
               icon
               :href="$t('site.footer.repo_link')"
               target="_blank"

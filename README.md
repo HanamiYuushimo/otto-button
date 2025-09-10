@@ -57,7 +57,7 @@ git clone https://github.com/<你的用户名>/<刚才创建的仓库名称>
 
 如果需要添加某个语言，可复制一份`default.json`，然后文件名修改为语言简称，同时需要在`layouts/default.vue L83`处添加UI入口，在`plugins/i18n.js`和`store/index.js`两个文件分别添加相应的配置，可参考现有的语言。
 
-如果需要添加某个语言，则将改语言的json文件删除，同时需要在`layouts/default.vue L83`处删除UI入口，在`plugins/i18n.js`和`store/index.js`两个文件分别删除相应的配置。
+如果需要删除某个语言，则将该语言的json文件删除，同时需要在`layouts/default.vue L83`处删除UI入口，在`plugins/i18n.js`和`store/index.js`两个文件分别删除相应的配置。
 
 网站的关于页面(`/about`)将会显示主目录下的`README.md`(也就是你现在正在阅读的这个文件)以及对应的语言(`README.lang.md`)，如果需要修改关于页支持的语言，可以到`pages/about.vue`中对应位置添加或删除，有现成的示例。
 

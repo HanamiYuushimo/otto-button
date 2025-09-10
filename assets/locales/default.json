@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "【V按钮】",
+    "title": "棍按钮",
     "description": "】这里写个描述，比如XX按钮旨在打造一个XX的语音分享平台之类的】",
     "keywords": "【网站的关键词 SEO】",
     "url": "https://xxxx.com",
@@ -11,10 +11,11 @@
     "switch_dark_mode": "夜间模式开关",
     "switch_language": "切换语言",
     "footer": {
-      "author": "【海离Channel，写主要开发者/组织就行】",
-      "author_link": "【整个链接到开发者/组织，比如GitHub啊B站啊都可以】",
-      "repo_link": "【如果开源的话可以贴个git地址，不开源的话把这个设置成no_display】",
-      "content": "本站为爱好者作品，和**官方没有关联，STAFF名单以及项目参与方式请查看\"关于\"页面"
+      "author": "幽霜Yuushimo",
+      "author_link_github": "https://github.com/HanamiYuushimo",
+      "author_link_bili": "https://space.bilibili.com/14208576",
+      "repo_link": "https://github.com/HanamiYuushimo/otto-button",
+      "content": "本站为爱好者作品，和电棍otto本人没有关联。STAFF名单以及项目参与方式请查看 \"关于\" 页面"
     }
   },
   "control": {
@@ -33,23 +34,23 @@
     "items": [
       {
         "icon": "/img/bilibili-fill.svg",
-        "title": "Bilibili 主页",
-        "to": "https://space.bilibili.com/7564991/"
+        "title": "电棍的 Bilibili 主页",
+        "to": "https://space.bilibili.com/628845081/"
+      },
+      {
+        "icon": "/img/douyu_icon.png",
+        "title": "电棍的斗鱼直播间",
+        "to": "https://www.douyu.com/12306"
       },
       {
         "icon": "/img/bilibili-fill.svg",
-        "title": "Bilibili 直播间",
-        "to": "https://live.bilibili.com/449047"
+        "title": "炫神的 Bilibili 主页",
+        "to": "https://space.bilibili.com/299013902/"
       },
       {
-        "icon": "/img/youtube-fill.svg",
-        "title": "YouTube",
-        "to": "https://www.youtube.com/channel/频道号?sub_confirmation=1"
-      },
-      {
-        "icon": "/img/twitter-fill.svg",
-        "title": "Twitter",
-        "to": "https://twitter.com/用户名"
+        "icon": "/img/bilibili-fill.svg",
+        "title": "炫神的 Bilibili 直播间",
+        "to": "https://live.bilibili.com/84074"
       }
     ]
   }
