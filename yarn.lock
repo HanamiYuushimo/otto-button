@@ -5392,7 +5392,7 @@ jiti@^0.1.11:
 
 js-yaml-loader@^1.2.2:
   version "1.2.2"
-  resolved "https://registry.nlark.com/js-yaml-loader/download/js-yaml-loader-1.2.2.tgz#2c15f93915617acd19676d648945fa3003f8629b"
+  resolved "https://registry.npmjs.org/js-yaml-loader/-/js-yaml-loader-1.2.2.tgz#2c15f93915617acd19676d648945fa3003f8629b"
   integrity sha1-LBX5ORVhes0ZZ21kiUX6MAP4Yps=
   dependencies:
     js-yaml "^3.13.1"
@@ -8820,7 +8820,7 @@ uglify-js@^3.5.1:
 
 un-eval@^1.2.0:
   version "1.2.0"
-  resolved "https://registry.nlark.com/un-eval/download/un-eval-1.2.0.tgz#22a95c650334d59d21697efae32612218ecad65f"
+  resolved "https://registry.npmjs.org/un-eval/-/un-eval-1.2.0.tgz#22a95c650334d59d21697efae32612218ecad65f"
   integrity sha1-IqlcZQM01Z0haX764yYSIY7K1l8=
 
 unfetch@^4.1.0:
