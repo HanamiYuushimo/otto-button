@@ -13,7 +13,7 @@
       <v-list style="padding-top: 0;">
         <v-list-item to="/" router exact dense>
           <v-list-item-action>
-            <v-icon>{{ icons.apps }}</v-icon>
+            <v-icon>{{ icons.home }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ $t('site.index') }}</v-list-item-title>
@@ -42,7 +42,7 @@
         <!-- 友情链接 -->
         <v-list-item dense to="/links" router exact>
           <v-list-item-action>
-            <v-icon>{{ icons.play_list_star }}</v-icon>
+            <v-icon>{{ icons.link_variant }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ $t('site.links') }}</v-list-item-title>
@@ -50,7 +50,7 @@
         </v-list-item>
         <v-list-item dense to="/about" router exact>
           <v-list-item-action>
-            <v-icon>{{ icons.code_tags }}</v-icon>
+            <v-icon>{{ icons.information_outline }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ $t('site.about') }}</v-list-item-title>
@@ -190,14 +190,14 @@ a {
 
 <script>
 import {
-  mdiApps,
-  mdiCodeTags,
+  mdiHome,
+  mdiLinkVariant,
   mdiBrightness2,
   mdiTranslate,
   mdiGithub,
   mdiNewspaper,
   mdiAlphaBBox,
-  mdiPlaylistStar,
+  mdiInformationOutline,
   mdiCommentAccountOutline
 } from '@mdi/js';
 //import themes from '../assets/themes.js';
@@ -206,14 +206,14 @@ export default {
   data() {
     return {
       icons: {
-        apps: mdiApps,
-        code_tags: mdiCodeTags,
+        home: mdiHome,
+        link_variant: mdiLinkVariant,
+        information_outline: mdiInformationOutline,
         brightness: mdiBrightness2,
         translate: mdiTranslate,
         github: mdiGithub,
         newspaper: mdiNewspaper,
         alpha_b_box: mdiAlphaBBox,
-        play_list_star: mdiPlaylistStar,
         account: mdiCommentAccountOutline
       },
       drawer: false,
