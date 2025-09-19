@@ -1,29 +1,65 @@
 {
   "groups": [
     {
-      "group_name": "actmoe",
+      "group_name": "shuoDeDaoLi",
       "group_description": {
-        "zh": "第一个分类",
-        "en": "Moe",
-        "ja": "萌え"
+        "zh": "大家好啊，我是说的道理"
       },
       "voice_list": [
         {
-          "name": "v-001",
-          "path": "v-001.mp3",
+          "name": "s1_1",
+          "path": "说的道理/s1_1.mp3",
           "description": {
-            "zh": "示例1",
-            "en": "Example 1",
-            "ja": "例1"
+            "zh": "啊~么初生啊我写诗"
           }
         },
         {
-          "name": "v-002",
-          "path": "v-002.mp3",
+          "name": "s1_2",
+          "path": "说的道理/s1_2.mp3",
           "description": {
-            "zh": "示例2 民那我是你的爸爸",
-            "en": "Example 2 I'm your daddy!",
-            "ja": "例2 这日语我不会"
+            "zh": "哈姆~野鹤相当饿"
+          }
+        },
+        {
+          "name": "s1_3",
+          "path": "说的道理/s1_3.mp3",
+          "description": {
+            "zh": "啊你~冶炼那fish，一伙米把fish"
+          }
+        },
+        {
+          "name": "s1_4",
+          "path": "说的道理/s1_4.mp3",
+          "description": {
+            "zh": "啊米浴说的道理~"
+          }
+        },
+        {
+          "name": "s1_5",
+          "path": "说的道理/s1_5.mp3",
+          "description": {
+            "zh": "诺里谁所度迷失"
+          }
+        },
+        {
+          "name": "s1_6",
+          "path": "说的道理/s1_6.mp3",
+          "description": {
+            "zh": "啊额~homo一床上~"
+          }
+        },
+        {
+          "name": "s1_7",
+          "path": "说的道理/s1_7.mp3",
+          "description": {
+            "zh": "啊吧~波比是我爹"
+          }
+        },
+        {
+          "name": "s1_8",
+          "path": "说的道理/s1_8.mp3",
+          "description": {
+            "zh": "啊~喵内的手汉汉好没有"
           }
         }
       ]
@@ -31,36 +67,28 @@
     {
       "group_name": "nakigoe",
       "group_description": {
-        "zh": "第二个分类",
-        "en": "Roaring",
-        "ja": "鳴き声"
+        "zh": "第二个分类"
       },
       "voice_list": [
         {
           "name": "v-003",
           "path": "f-003.mp3",
           "description": {
-            "zh": "示例3",
-            "en": "example3",
-            "ja": "例3"
+            "zh": "示例3"
           }
         },
         {
           "name": "v-004",
           "path": "v-004.mp3",
           "description": {
-            "zh": "示例4",
-            "en": "four",
-            "ja": "4"
+            "zh": "示例4"
           }
         },
         {
           "name": "v-005",
           "path": "相对路径也可以/v-005.mp3",
           "description": {
-            "zh": "五",
-            "en": "five",
-            "ja": "5"
+            "zh": "五"
           }
         }
       ]
