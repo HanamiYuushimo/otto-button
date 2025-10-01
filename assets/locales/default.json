@@ -1,10 +1,10 @@
 {
   "site": {
     "title": "棍按钮",
-    "description": "】这里写个描述，比如XX按钮旨在打造一个XX的语音分享平台之类的】",
+    "description": "收录来自吉吉国的原声大碟，持续更新中",
     "keywords": "【网站的关键词 SEO】",
-    "url": "https://xxxx.com",
-    "social_image": "【https://xxxx.moe/img/social.png】 < 就是分享到推特之类的可以用这个当卡片封面",
+    "url": "https://hanamiyuushimo.github.io/otto-button",
+    "social_image": "/img/og_common.jpg",
     "index": "主页",
     "links": "友情链接",
     "about": "关于",

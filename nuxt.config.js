@@ -9,6 +9,9 @@ export default {
     port: 3000, // default: 3000
     host: 'localhost' // default: localhost
   },
+  app: {
+    baseURL: '/otto-button/'
+  },
   /*
    ** Headers of the page
    */
