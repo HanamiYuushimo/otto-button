@@ -27,8 +27,8 @@
     "overlap": "重叠播放",
     "random": "随机播放",
     "repeat": "洗脑循环",
-    "full_name": "【显示在媒体控制上的作者名，一般写V的名字就好】",
-    "overlap_title": "【显示在媒体控制上的作者名,只不过是重叠播放的，一般写V的名字就好】"
+    "full_name": "棍按钮 otto-button",
+    "overlap_title": "棍按钮 otto-button"
   },
   "navigator": {
     "items": [

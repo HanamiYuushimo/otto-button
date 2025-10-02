@@ -44,8 +44,8 @@ export default {
       { name: 'twitter:site', content: '@lonely_ion' }
     ],
     link: [
-      { rel: 'icon', type: 'image/png', href: '/icon.svg' },
-      { rel: 'shortcut icon', type: 'image/png', href: '/icon.svg' }
+      { rel: 'icon', type: 'image/png', href: 'icon.svg' },
+      { rel: 'shortcut icon', type: 'image/png', href: 'icon.svg' }
     ]
   },
   /*
