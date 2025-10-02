@@ -4,7 +4,7 @@
     "description": "收录来自吉吉国的原声大碟，持续更新中",
     "keywords": "【网站的关键词 SEO】",
     "url": "https://hanamiyuushimo.github.io/otto-button",
-    "social_image": "/img/og_common.jpg",
+    "social_image": "img/og_common.jpg",
     "index": "主页",
     "links": "友情链接",
     "about": "关于",
@@ -33,22 +33,22 @@
   "navigator": {
     "items": [
       {
-        "icon": "/img/bilibili-fill.svg",
+        "icon": "img/bilibili-fill.svg",
         "title": "电棍的 B 站主页",
         "to": "https://space.bilibili.com/628845081/"
       },
       {
-        "icon": "/img/douyu_icon.png",
+        "icon": "img/douyu_icon.png",
         "title": "电棍的斗鱼直播间",
         "to": "https://www.douyu.com/12306"
       },
       {
-        "icon": "/img/bilibili-fill.svg",
+        "icon": "img/bilibili-fill.svg",
         "title": "炫神的 B 站主页",
         "to": "https://space.bilibili.com/299013902/"
       },
       {
-        "icon": "/img/bilibili-fill.svg",
+        "icon": "img/bilibili-fill.svg",
         "title": "炫神的 B 站直播间",
         "to": "https://live.bilibili.com/84074"
       }
