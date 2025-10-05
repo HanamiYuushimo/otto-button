@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- 侧边栏 -->
     <v-navigation-drawer v-model="drawer" :mobile-breakpoint="1024" class="elevation-3" fixed app>
       <!--
       <template v-slot:img>
@@ -48,6 +49,7 @@
             <v-list-item-title>{{ $t('site.links') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <!-- 关于 -->
         <v-list-item dense to="/about" router exact>
           <v-list-item-action>
             <v-icon>{{ icons.information_outline }}</v-icon>
@@ -58,11 +60,15 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    <!-- 顶栏 -->
     <v-app-bar dense class="primary white--text" app>
+      <!-- 打开/收起侧边栏 -->
       <v-app-bar-nav-icon class="white--text" @click.stop="drawer = !drawer" />
+      <!-- 网站名称 -->
       <v-toolbar-title v-text="$t('site.title')" />
       <v-img src="icon.svg" style="max-width: 24px; margin-left: 6px;" />
       <v-spacer />
+      <!-- 切换深色模式 -->
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon class="white--text" @click="switch_dark()" v-on="on">
@@ -71,6 +77,7 @@
         </template>
         <span>{{ $t('site.switch_dark_mode') }}</span>
       </v-tooltip>
+      <!-- 切换语言 -->
       <!-- <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
           <v-tooltip bottom>
@@ -99,12 +106,13 @@
       <v-container class="page">
         <nuxt />
       </v-container>
+      <!-- 页脚 -->
       <v-footer :fixed="false" class="footer">
         <div>
           <div style="vertical-align: middle;">
             <span>&copy; {{ new Date().getFullYear() }} </span>
             <span>
-              <a :href="$t('site.footer.author_link_github')" target="_blank" rel="noreferrer">
+              <a :href="$t('site.footer.author_link_bili')" target="_blank" rel="noreferrer">
                 {{ $t('site.footer.author') }}
               </a>
             </span>
@@ -115,11 +123,11 @@
               style="vertical-align: middle;"
               rel="noreferrer"
             >
-              <v-icon>{{ icons.github }}</v-icon>
+              <v-icon>{{ icons.book }}</v-icon>
             </v-btn>
             <v-btn
               icon
-              :href="$t('site.footer.repo_link')"
+              :href="$t('site.footer.author_link_github')"
               target="_blank"
               style="vertical-align: middle;"
               rel="noreferrer"
@@ -184,7 +192,7 @@ a {
   padding-bottom: 150px;
 }
 .footer {
-  margin-top: -150px;
+  margin-top: -88px;
 }
 </style>
 
@@ -195,6 +203,7 @@ import {
   mdiBrightness2,
   mdiTranslate,
   mdiGithub,
+  mdiBook,
   mdiNewspaper,
   mdiAlphaBBox,
   mdiInformationOutline,
@@ -212,6 +221,7 @@ export default {
         brightness: mdiBrightness2,
         translate: mdiTranslate,
         github: mdiGithub,
+        book: mdiBook,
         newspaper: mdiNewspaper,
         alpha_b_box: mdiAlphaBBox,
         account: mdiCommentAccountOutline
