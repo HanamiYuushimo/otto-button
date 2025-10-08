@@ -8,6 +8,8 @@
 
 ---
 
+# Material Vtuber Button
+
 这是一个模板项目，旨在帮助开发者快速创建一个 Material Design 风格的 VTuber/VUP（甚至其他角色或人物）的语音按钮网站。
 
 ![Version](https://img.shields.io/github/package-json/v/lonelyion/material-vtuber-button)
