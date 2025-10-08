@@ -41,7 +41,8 @@ export default {
       },
       { hid: 'og:image', property: 'og:image', content: trs.site.social_image },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:site', content: '@lonely_ion' }
+      { name: 'twitter:site', content: '@Yuushimo2333' },
+      { name: 'twitter:image', content: trs.site.social_image }
     ],
     link: [
       { rel: 'icon', type: 'image/png', href: 'icon.svg' },
