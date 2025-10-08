@@ -1,10 +1,10 @@
 {
   "site": {
-    "title": "棍按钮",
-    "description": "收录来自吉吉国的原声大碟，持续更新中",
+    "title": "棍按钮 - 电棍otto原声大碟",
+    "description": "欧内的手，好汉！",
     "keywords": "【网站的关键词 SEO】",
     "url": "https://hanamiyuushimo.github.io/otto-button",
-    "social_image": "https://s2.loli.net/2025/10/08/ZhfapJHq7mAjXdF.png",
+    "social_image": "img/og_common.jpg",
     "index": "主页",
     "links": "友情链接",
     "about": "关于",
