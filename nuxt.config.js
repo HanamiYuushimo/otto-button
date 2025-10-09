@@ -16,7 +16,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: trs.site.title,
+    title: trs.site.title_meta,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -33,7 +33,7 @@ export default {
       { hid: 'og:site_name', property: 'og:site_name', content: trs.site.title },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: trs.site.url },
-      { hid: 'og:title', property: 'og:title', content: trs.site.title },
+      { hid: 'og:title', property: 'og:title', content: trs.site.title_meta },
       {
         hid: 'og:description',
         property: 'og:description',
