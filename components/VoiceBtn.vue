@@ -11,7 +11,9 @@
         :style="{
           '--hover-content': 'url(\'' + emoji_url + '\')',
           '--progress': progress + '%',
-          '--start-percent': progress - 5 + '%'
+          '--start-percent': progress + '%'
+          // '--start-percent': progress - 5 + '%'
+          // 上面两个参数相同则播放时不显示渐变（下面两个 linear-gradient 参数）
         }"
       >
         <div style="z-index: 2;">
