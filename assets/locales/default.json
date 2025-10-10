@@ -28,8 +28,9 @@
     "overlap": "重叠播放",
     "random": "随机播放",
     "repeat": "洗脑循环",
+    "reverse": "倒放（试验性）",
     "full_name": "棍按钮 otto-button",
-    "overlap_title": "棍按钮 otto-button"
+    "overlap_title": "棍按钮 - 重叠播放中"
   },
   "navigator": {
     "items": [

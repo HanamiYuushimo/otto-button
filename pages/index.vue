@@ -32,6 +32,15 @@
           {{ icons.selection_ellipse_arrow_inside }}
         </v-icon>
       </v-btn>
+      <!-- 倒放功能实现（试验性） -->
+      <v-btn fab small :class="fab_color" @click.stop="reverse = !reverse">
+        <span class="fab-tip">
+          {{ reverse_text }}
+        </span>
+        <v-icon :class="fab_icon">
+          {{ icons.undo_variant }}
+        </v-icon>
+      </v-btn>
       <v-btn fab small :class="fab_color" :disabled="random" @click.stop="overlap = !overlap">
         <span class="fab-tip">
           {{ overlap_text }}
@@ -154,6 +163,7 @@ import {
   mdiSelectionEllipseArrowInside,
   mdiShuffle,
   mdiStop,
+  mdiUndoVariant, //experimental
   mdiViewParallel
 } from '@mdi/js';
 
@@ -172,17 +182,20 @@ export default {
         view_parallel: mdiViewParallel,
         repeat: mdiRepeat,
         shuffle: mdiShuffle,
+        undo_variant: mdiUndoVariant, // experimental
         clock_outline: mdiClockOutline
       },
       overlap: false,
       random: false,
       repeat: false,
+      reverse: false, // experimental
       fab: false,
       groups: voice_lists.groups,
       now_playing: new Set(),
       upcoming_lives: [],
       lives: [],
-      lives_loading: true
+      lives_loading: true,
+      audioCtx: null
     };
   },
   computed: {
@@ -226,6 +239,12 @@ export default {
     },
     repeat_text() {
       return this.$t('control.repeat') + ' ' + (this.repeat ? this.$t('control.enabled') : this.$t('control.disabled'));
+    },
+    reverse_text() {
+      // experimental
+      return (
+        this.$t('control.reverse') + ' ' + (this.reverse ? this.$t('control.enabled') : this.$t('control.disabled'))
+      );
     }
   },
   async mounted() {
@@ -265,7 +284,7 @@ export default {
         });
       }
     },
-    play(item) {
+    async play(item) {
       //播放音频主逻辑部分
       let ref = null;
       let timer = null;
@@ -276,27 +295,39 @@ export default {
       });
       if (!this.overlap) {
         this.now_playing.forEach(i => {
-          i.pause();
+          if (i && typeof i.pause === 'function') {
+            i.pause();
+          }
+          if (i && typeof i.stop === 'function') {
+            i.stop();
+          }
           this.now_playing.delete(i);
           console.log(item.name, 'paused before new playing');
         });
       }
       let setup_timer = () => {
+        // 进度条前进
         if (timer !== null) clear_timer();
+        // 初始化
         timer = setInterval(() => {
           let prog = Number(((audio.currentTime / audio.duration) * 100).toFixed(2));
+          // 音频当前播放的时间除以总时间，乘 100 得到百分比，保留两位小数
           if (prog !== Infinity && !isNaN(prog)) {
             ref.progress = prog;
           } else {
             ref.progress = 0;
           }
-        }, 50);
+        }, 20);
+        // 每 20ms 更新
       };
       let smooth_end = () => {
+        // 进度条返回
         let play_end_timer = setInterval(() => {
           ref.progress -= 5;
+          // 进度每一次 -5，直到结束
           if (ref.progress <= 0) {
             clearInterval(play_end_timer);
+            // 清除计时器
             play_end_timer = null;
           }
         }, 50);
@@ -306,14 +337,100 @@ export default {
         clearInterval(timer);
         timer = null;
       };
+
+      // 倒放功能（experimental）：使用 Web Audio API 将音频缓冲倒序后播放
+      // 该功能为 AI 辅助实现，可能存在性能问题
+      if (this.reverse) {
+        // 仅在客户端环境执行倒放逻辑，SSR 环境回退为正常播放
+        if (!process.client) {
+          // 在服务端渲染阶段不执行倒放，继续走常规 HTMLAudio 播放分支
+        } else {
+          try {
+            const ctx = this.audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            this.audioCtx = ctx;
+            const url = this.voice_host + item.path;
+            const res = await fetch(url);
+            const arrayBuffer = await res.arrayBuffer();
+            const buffer = await ctx.decodeAudioData(arrayBuffer);
+
+            for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
+              const data = buffer.getChannelData(ch);
+              // TypedArray 原地倒序
+              Array.prototype.reverse.call(data);
+            }
+
+            const source = ctx.createBufferSource();
+            source.buffer = buffer;
+            source.connect(ctx.destination);
+
+            const startTime = ctx.currentTime;
+            // 进度条前进（基于 AudioContext 时间轴）
+            if (timer !== null) clear_timer();
+            timer = setInterval(() => {
+              const ratio = (ctx.currentTime - startTime) / buffer.duration;
+              const prog = Number((ratio * 100).toFixed(2));
+              ref.progress = prog !== Infinity && !isNaN(prog) ? prog : 0;
+            }, 20);
+
+            source.start(0);
+            this.now_playing.add(source);
+            this.send_google_event(item);
+            ref.playing = true;
+
+            source.onended = () => {
+              if (this.repeat) {
+                this.play(item);
+              } else if (this.random) {
+                this.play_random_voice();
+              } else {
+                smooth_end();
+                clear_timer();
+                this.now_playing.delete(source);
+              }
+            };
+
+            this.$bus.$on('abort_play', () => {
+              try {
+                source.stop(0);
+              } catch (e) {
+                // 在已停止或未开始时调用 stop 可能抛错，此处仅记录并继续
+                if (process.client) {
+                  console.debug('Reverse source.stop error:', e);
+                }
+              }
+              smooth_end();
+              clear_timer();
+              this.now_playing.delete(source);
+            });
+
+            if ('mediaSession' in navigator) {
+              const metadata = {
+                title: item.description[this.current_locale],
+                artist: this.$t('control.full_name'),
+                album: this.$t('site.title'),
+                artwork: [{ src: 'img/media-cover.jpg', sizes: '128x128', type: 'image/jpeg' }]
+              };
+              navigator.mediaSession.metadata = new window.MediaMetadata(metadata);
+              navigator.mediaSession.playbackState = 'playing';
+            }
+          } catch (err) {
+            console.error('Reverse playback failed:', err);
+          }
+          return;
+        }
+      }
+
       let audio = new Audio(this.voice_host + item.path);
+      // 文件路径
       audio.load(); //This could fix iOS playing bug
       if ('mediaSession' in navigator) {
         const metadata = {
           title: this.overlap ? this.$t('control.overlap_title') : item.description[this.current_locale],
+          // 判断是否为重叠播放，是则在浏览器媒体控件显示 overlap_title，否则显示播放的文件名称
           artist: this.$t('control.full_name'),
           album: this.$t('site.title'),
           artwork: [{ src: 'img/media-cover.jpg', sizes: '128x128', type: 'image/jpeg' }]
+          // 媒体控件显示的专辑图片
         };
         navigator.mediaSession.metadata = new window.MediaMetadata(metadata);
         navigator.mediaSession.playbackState = 'playing';
