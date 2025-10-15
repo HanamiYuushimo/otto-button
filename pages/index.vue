@@ -339,13 +339,14 @@ export default {
       };
 
       // 倒放功能（experimental）：使用 Web Audio API 将音频缓冲倒序后播放
-      // 该功能为 AI 辅助实现，可能存在性能问题
+      // 该功能为 AI 辅助实现，可能存在 bug
       if (this.reverse) {
         // 仅在客户端环境执行倒放逻辑，SSR 环境回退为正常播放
         if (!process.client) {
           // 在服务端渲染阶段不执行倒放，继续走常规 HTMLAudio 播放分支
         } else {
           try {
+            // 创建音频上下文
             const ctx = this.audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             this.audioCtx = ctx;
             const url = this.voice_host + item.path;
@@ -359,50 +360,178 @@ export default {
               Array.prototype.reverse.call(data);
             }
 
+            // 非重叠模式下，停止其他音频
+            if (!this.overlap) {
+              // 停止所有当前正在播放的音频
+              this.now_playing.forEach(i => {
+                if (i && typeof i.stop === 'function') {
+                  try {
+                    i.stop(0);
+                  } catch (e) {
+                    console.debug('Error stopping audio:', e);
+                  }
+                }
+              });
+              // 清空之前的播放项
+              this.now_playing.clear();
+              this.audio_refs = this.audio_refs || new Map();
+              this.audio_refs.clear();
+              // 重置主进度条
+              if (timer !== null) clear_timer();
+              smooth_end();
+            }
+
+            // 检查是否已经有相同音频在播放
+            let existingSource = null;
+            this.audio_refs = this.audio_refs || new Map();
+            this.now_playing.forEach(src => {
+              const ref = this.audio_refs.get(src);
+              if (ref && ref.item === item) {
+                existingSource = src;
+              }
+            });
+
+            // 如果相同音频已在播放，先停止它
+            if (existingSource) {
+              try {
+                existingSource.stopped = true;
+                existingSource.stop(0);
+                clearInterval(this.audio_refs.get(existingSource).timer);
+                this.now_playing.delete(existingSource);
+                this.audio_refs.delete(existingSource);
+                // 重置进度条
+                if (item === this.last_played) {
+                  smooth_end();
+                }
+              } catch (e) {
+                console.debug('Error stopping existing audio:', e);
+              }
+            }
+
             const source = ctx.createBufferSource();
             source.buffer = buffer;
             source.connect(ctx.destination);
 
-            const startTime = ctx.currentTime;
+            // 为每个音频源创建独立的计时器和进度条引用
+            const sourceRef = {
+              progress: 0,
+              playing: true,
+              timer: null,
+              source: source,
+              item: item,
+              startTime: ctx.currentTime,
+              progressElement: null
+            };
+
+            // 设置循环播放
+            if (this.repeat) {
+              source.loop = true;
+            }
+
+            // 监听循环播放状态变化
+            const repeatWatcher = this.$watch('repeat', newVal => {
+              if (source && !source.stopped) {
+                source.loop = newVal;
+              }
+            });
+
+            // 为每个音频创建独立的进度条元素
+            if (this.overlap) {
+              // 在重叠模式下，为每个音频创建独立的进度条引用
+              sourceRef.progressElement = ref;
+            } else {
+              // 非重叠模式下使用主进度条
+              sourceRef.progressElement = ref;
+            }
+
             // 进度条前进（基于 AudioContext 时间轴）
-            if (timer !== null) clear_timer();
-            timer = setInterval(() => {
-              const ratio = (ctx.currentTime - startTime) / buffer.duration;
-              const prog = Number((ratio * 100).toFixed(2));
-              ref.progress = prog !== Infinity && !isNaN(prog) ? prog : 0;
+            sourceRef.timer = setInterval(() => {
+              if (!source.stopped) {
+                // 计算当前进度
+                let currentTime = (ctx.currentTime - sourceRef.startTime) % buffer.duration;
+                if (currentTime < 0) currentTime = 0;
+
+                const ratio = currentTime / buffer.duration;
+                const prog = Number((ratio * 100).toFixed(2));
+                sourceRef.progress = prog !== Infinity && !isNaN(prog) ? prog : 0;
+
+                // 更新UI进度条
+                if (sourceRef.progressElement && !source.stopped) {
+                  sourceRef.progressElement.progress = sourceRef.progress;
+                }
+              }
             }, 20);
 
             source.start(0);
+            // 存储音频源和引用的映射关系
             this.now_playing.add(source);
+            this.audio_refs.set(source, sourceRef);
+
             this.send_google_event(item);
+            this.last_played = item;
             ref.playing = true;
 
             source.onended = () => {
-              if (this.repeat) {
-                this.play(item);
-              } else if (this.random) {
-                this.play_random_voice();
-              } else {
-                smooth_end();
-                clear_timer();
+              // 如果音频已被标记为停止，不执行后续逻辑
+              if (source.stopped) return;
+
+              // 如果不是循环播放，或者循环播放被关闭了
+              if (!source.loop) {
+                // 标记为已停止
+                source.stopped = true;
+
+                // 清理当前音频源的资源
+                clearInterval(sourceRef.timer);
                 this.now_playing.delete(source);
+                this.audio_refs.delete(source);
+                // 取消监听
+                repeatWatcher();
+
+                // 如果是最后播放的音频，则更新UI
+                if (sourceRef.progressElement) {
+                  // 确保进度条平滑结束
+                  smooth_end();
+
+                  // 延迟执行下一个播放，确保进度条动画完成
+                  setTimeout(() => {
+                    if (this.random && !this.overlap && this.now_playing.size === 0) {
+                      this.play_random_voice();
+                    }
+                  }, 300);
+                }
               }
             };
 
-            this.$bus.$on('abort_play', () => {
+            // 注册一次性事件监听器，避免多次绑定
+            const abortHandler = () => {
               try {
+                // 标记为已停止
+                source.stopped = true;
+                if (source.loop) {
+                  source.loop = false;
+                }
                 source.stop(0);
+                // 清理资源
+                clearInterval(sourceRef.timer);
+                this.now_playing.delete(source);
+                this.audio_refs.delete(source);
+                // 取消监听
+                repeatWatcher();
+                // 如果有进度条元素，则更新UI
+                if (sourceRef.progressElement) {
+                  // 确保进度条平滑结束
+                  smooth_end();
+                }
+                // 移除事件监听器
+                this.$bus.$off('abort_play', abortHandler);
               } catch (e) {
                 // 在已停止或未开始时调用 stop 可能抛错，此处仅记录并继续
                 if (process.client) {
                   console.debug('Reverse source.stop error:', e);
                 }
               }
-              smooth_end();
-              clear_timer();
-              this.now_playing.delete(source);
-            });
-
+            };
+            this.$bus.$on('abort_play', abortHandler);
             if ('mediaSession' in navigator) {
               const metadata = {
                 title: item.description[this.current_locale],
@@ -416,7 +545,7 @@ export default {
           } catch (err) {
             console.error('Reverse playback failed:', err);
           }
-          return;
+          return; // 倒放模式下，不执行后续的常规播放代码
         }
       }
 
