@@ -1,6 +1,6 @@
 # 关于
 
-本项目基于 [Material Vtuber Button](https://github.com/lonelyion/material-vtuber-button) 项目进行修改。
+本项目基于 [Material Vtuber Button](https://github.com/lonelyion/material-vtuber-button) 项目进行构建。
 
 感谢[离子](https://github.com/lonelyion)老师对原项目的贡献！
 

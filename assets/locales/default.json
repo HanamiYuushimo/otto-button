@@ -36,7 +36,7 @@
     "items": [
       {
         "icon": "img/bilibili-fill.svg",
-        "title": "电棍的 B 站主页",
+        "title": "电棍的B站主页",
         "to": "https://space.bilibili.com/628845081/"
       },
       {
@@ -46,12 +46,12 @@
       },
       {
         "icon": "img/bilibili-fill.svg",
-        "title": "炫神的 B 站主页",
+        "title": "炫神的B站主页",
         "to": "https://space.bilibili.com/299013902/"
       },
       {
         "icon": "img/bilibili-fill.svg",
-        "title": "炫神的 B 站直播间",
+        "title": "炫神的B站直播间",
         "to": "https://live.bilibili.com/84074"
       }
     ]

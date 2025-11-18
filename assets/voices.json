@@ -1,63 +1,63 @@
 {
   "groups": [
     {
-      "group_name": "shuoDeDaoLi",
+      "group_name": "ShuoDeDaoLi",
       "group_description": {
         "zh": "大家好啊，我是说的道理"
       },
       "voice_list": [
         {
-          "name": "s1_1",
-          "path": "说的道理/s1_1.mp3",
+          "name": "01",
+          "path": "sddl/01.mp3",
           "description": {
             "zh": "啊~么初生啊我写诗"
           }
         },
         {
-          "name": "s1_2",
-          "path": "说的道理/s1_2.mp3",
+          "name": "02",
+          "path": "sddl/02.mp3",
           "description": {
             "zh": "哈姆~野鹤相当饿"
           }
         },
         {
-          "name": "s1_3",
-          "path": "说的道理/s1_3.mp3",
+          "name": "03",
+          "path": "sddl/03.mp3",
           "description": {
             "zh": "啊你~冶炼那fish，一伙米把fish"
           }
         },
         {
-          "name": "s1_4",
-          "path": "说的道理/s1_4.mp3",
+          "name": "04",
+          "path": "sddl/04.mp3",
           "description": {
             "zh": "啊米浴说的道理~"
           }
         },
         {
-          "name": "s1_5",
-          "path": "说的道理/s1_5.mp3",
+          "name": "05",
+          "path": "sddl/05.mp3",
           "description": {
             "zh": "诺里谁所度迷失"
           }
         },
         {
-          "name": "s1_6",
-          "path": "说的道理/s1_6.mp3",
+          "name": "06",
+          "path": "sddl/06.mp3",
           "description": {
             "zh": "啊额~homo一床上~"
           }
         },
         {
-          "name": "s1_7",
-          "path": "说的道理/s1_7.mp3",
+          "name": "07",
+          "path": "sddl/07.mp3",
           "description": {
             "zh": "啊吧~波比是我爹"
           }
         },
         {
-          "name": "s1_8",
-          "path": "说的道理/s1_8.mp3",
+          "name": "08",
+          "path": "sddl/08.mp3",
           "description": {
             "zh": "啊~喵内的手汉汉好没有"
           }
